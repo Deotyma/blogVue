@@ -2,7 +2,7 @@ module.exports = {
   lintOnSave: false,
 
   transpileDependencies: ["vuetify"],
-  devDerver: {
+  devServer: {
     proxy: "http://localhost:5000/"
   }
 };

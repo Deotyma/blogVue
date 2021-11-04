@@ -9,9 +9,9 @@
         <v-list-item-title>
           Święty Józef
         </v-list-item-title>
-        <v-list-itmem-subtitle>
+        <v-list-item-subtitle>
           Strona poświęcona konsekracji świętemu Józefowi
-        </v-list-itmem-subtitle>
+        </v-list-item-subtitle>
         <v-divider></v-divider>
         <v-list dense>
       <v-list-item-group
