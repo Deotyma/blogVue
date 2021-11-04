@@ -1,25 +1,75 @@
+const Post = require("../models/posts");
+const fs = require("fs");
 module.exports = class API {
     static async fetchAllPost(req, res) {
-        res.send("Hello from API")
+        try {
+            const posts = await Post.find();
+            res.status(200).json(posts)
+        } catch (err) {
+            res.status(404).json({ message: err.message })
+        }
     };
 
     static async fetchPostByID(req, res) {
-        res.send("Post by ID")
+        const id = req.params.id;
+        try {
+            const post = await Post.findById(id);
+            res.status(200).json(post)
+        } catch (err) {
+            res.status(404).json({ message: err.message })
+        }
     };
 
     static async createPost(req, res) {
-        res.send("create Post")
+        const post = req.body;
+        const imageName = req.file.filename;
+        post.image = imageName;
+        try {
+            await Post.create(post);
+            res.status(201).json({ message: "Post created successfully!" })
+        } catch (err) {
+            res.status(400).json({ message: err.message })
+        }
     };
 
     static async updatePost(req, res) {
-        res.send("Hello from API")
-    };
+        const id = req.params.id;
+        let new_image = "";
+        if (req.file) {
+            new_image = req.file.filename;
+            try {
+                fs.unlinkSync("./uploads/" + req.body.old_image);
+            } catch (err) {
+                console.log(err)
+            }
+        } else {
+            new_image = req.file
+        }
+        const newPost = req.body;
+        newPost.image = new_image;
 
-    static async fetchAllPost(req, res) {
-        res.send("update Post")
+        try {
+            await Post.findByIdAndUpdate(id, newPost);
+            res.status(200).json({ message: "Post updated successfully!" })
+        } catch (err) {
+            res.status(404).json({ message: err.message })
+        }
     };
 
     static async deletePost(req, res) {
-        res.send("delete Post")
+        const id = req.params.id;
+        try {
+            const result = await Post.findByIdAndDelete(id);
+            if (result.image != "") {
+                try {
+                    fs.unlinkSync("./uploads/" + result.image)
+                } catch (err) {
+                    console.log(err)
+                }
+            }
+            res.status(200).json({ message: "Post deleted successfully!" })
+        } catch (err) {
+            res.status(404).json({ message: err.message })
+        }
     };
 };
