@@ -23,7 +23,7 @@ export default class API {
         return res.data;
     }
 
-    static async delete(id) {
+    static async deletePost(id) {
         const res = await axios.delete(`${url}/${id}`);
         return res.data;
     }

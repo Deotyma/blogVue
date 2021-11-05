@@ -3,7 +3,10 @@ import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import AddPost from "../views/AddPost.vue";
 import About from "../views/About.vue";
-import Post from "../views/Post.vue"
+import Post from "../views/Post.vue";
+import EditPost from "../views/EditPost.vue";
+import Signup from "../views/Signup.vue"
+import Login from "../views/Login.vue";
 
 
 Vue.use(VueRouter);
@@ -20,6 +23,11 @@ const routes = [
     component: AddPost,
   },
   {
+    path: "/edit-post/:id",
+    name: "edit-post",
+    component: EditPost,
+  },
+  {
     path: "/post/:id",
     name: "post",
     component: Post,
@@ -28,6 +36,16 @@ const routes = [
     path: "/onas",
     name: "onas",
     component: About,
+  },
+  {
+    path: "/signup",
+    name: "signup",
+    component: Signup,
+  },
+  {
+    path: "/login",
+    name: "login",
+    component: Login,
   },
 ];
 
